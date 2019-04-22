@@ -3,6 +3,7 @@ const webpack = require('webpack')
 var nodeExternals = require('webpack-node-externals')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const LoadablePlugin = require('@loadable/webpack-plugin')
 
 const paths = {
   src: resolve(__dirname, '..', 'src'),
@@ -38,14 +39,14 @@ const optimization = () => {
 module.exports = {
   entry: resolve(paths.server, 'index'),
   target: 'node',
-  externals: [nodeExternals()],
+  externals: ['@loadable/component', nodeExternals()],
   node: {
     __dirname: false
   },
   output: {
     path: paths.dist,
-    filename: 'server.js'
-    // libraryTarget: 'commonjs2'
+    filename: 'server.js',
+    libraryTarget: 'commonjs2'
     // publicPath: '/'
   },
   module: {
@@ -72,8 +73,7 @@ module.exports = {
             'dynamic-import-node-babel-7',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-transform-runtime',
-            'loadable-components/babel'
-            // 'react-loadable/babel'
+            '@loadable/babel-plugin'
           ]
         }
       },
@@ -101,6 +101,7 @@ module.exports = {
     new webpack.DefinePlugin({
       __isBrowser__: 'false'
     }),
+    // new LoadablePlugin(),
     new CleanWebpackPlugin()
   ],
   resolve: {

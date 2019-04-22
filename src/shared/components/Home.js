@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import loadable from 'loadable-components'
+import loadable from '@loadable/component'
 // import Nada from 'components/Nada'
 
 const Nada = loadable(() => import('components/Nada'), {

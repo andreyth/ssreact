@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-const isAuth = true
+const isAuth = false
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (

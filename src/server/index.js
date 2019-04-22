@@ -18,7 +18,8 @@ app.use(express.static(resolve(__dirname, '..', 'public')))
 app.get('/favicon.ico', (req, res) => res.status(204))
 
 app.get('*', (req, res, next) => {
-  renderer(req, res, next)
+  res.set('content-type', 'text/html')
+  res.send(renderer(req))
 })
 
 app.listen(3000, () => {

@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { loadComponents } from 'loadable-components'
+import { loadableReady } from '@loadable/component'
+import { BrowserRouter } from 'react-router-dom'
 
-import App from 'shared/App'
+import LoadRoutes from 'components/route/LoadRoutes'
 
 let exec = ReactDOM.render
 
@@ -10,16 +11,11 @@ if (process.env.NODE_ENV !== 'production') {
   exec = ReactDOM.hydrate
 }
 
-if (process.env.CLIENT) {
-  loadComponents().then(() => {
-    exec(
-      <App />,
-      document.getElementById('root')
-    )
-  })
-} else {
+loadableReady(() => {
   exec(
-    <App />,
+    <BrowserRouter>
+      <LoadRoutes />
+    </BrowserRouter>,
     document.getElementById('root')
   )
-}
+})

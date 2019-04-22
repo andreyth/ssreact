@@ -23,6 +23,8 @@
     "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "@loadable/babel-plugin": "^5.8.0",
+    "@loadable/webpack-plugin": "^5.7.1",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-dynamic-import-node-babel-7": "^2.0.7",
@@ -47,11 +49,12 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@loadable/component": "^5.7.0",
+    "@loadable/server": "^5.8.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "isomorphic-fetch": "^2.2.1",
-    "loadable-components": "^2.2.3",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",
     "react": "^16.8.6",

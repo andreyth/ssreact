@@ -1,38 +1,43 @@
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 import { resolve } from 'path'
-import fs from 'fs'
-import { getLoadableState } from 'loadable-components/server'
+// import fs from 'fs'
+import { ChunkExtractor } from '@loadable/server'
+import { StaticRouter } from 'react-router-dom'
 
-import Home from 'components/Home'
+import LoadRoutes from 'components/route/LoadRoutes'
 
-const renderer = (req, res, next) => {
-  console.log('OPA')
-  const filePath = resolve(__dirname, '..', 'public', 'main.html')
+const stats = {
+  client: resolve(__dirname, '..', 'public', 'loadable-stats.json'),
+  server: resolve(__dirname, '..', 'build-server', 'loadable-stats.json')
+}
 
-  fs.readFile(filePath, 'utf8', async (err, htmlData) => {
-    if (err) {
-      console.error('err', err)
-      return res.status(404).end()
-    }
+const renderer = (req) => {
+  const app = (
+    <StaticRouter location={req.url} context={{}}>
+      <LoadRoutes />
+    </StaticRouter>
+  )
 
-    const app = (<Home />)
+  const extractor = new ChunkExtractor({ statsFile: stats.client })
+  const jsx = extractor.collectChunks(app)
 
-    const loadableState = await getLoadableState(app)
-    const html = ReactDOMServer.renderToString(app)
+  const markup = renderToString(jsx)
 
-    let newHtml = htmlData.replace(
-      '<div id="root"></div>',
-      `
-      <div id="root">${html}</div>
-      ${loadableState.getScriptTag()}
-      `
-    )
-
-    return res.send(
-      newHtml
-    )
-  })
+  let html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        ${extractor.getLinkTags()}
+        ${extractor.getStyleTags()}
+      </head>
+      <body>
+        <div id="root">${markup}</div>
+        ${extractor.getScriptTags()}
+      </body>
+    </html>
+  `
+  return html
 }
 
 export default renderer

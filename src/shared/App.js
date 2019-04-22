@@ -1,14 +1,17 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import loadable from '@loadable/component'
 
-import LoadRoutes from 'components/route/LoadRoutes'
+const Home = loadable(() => import('components/Home'))
+const Login = loadable(() => import('components/Login'))
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <LoadRoutes />
-    </BrowserRouter>
-  )
-}
+const App = () => (
+  <div>
+
+    <Route exact path='/' component={Home} />
+    <Route path='/login' component={Login} />
+
+  </div>
+)
 
 export default App

@@ -1,12 +1,13 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
-const HtmlPlugin = require('html-webpack-plugin')
+// const HtmlPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 // const CompressionPlugin = require('compression-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const LoadablePlugin = require('@loadable/webpack-plugin')
 
 const paths = {
   src: resolve(__dirname, '..', 'src'),
@@ -51,7 +52,7 @@ module.exports = {
             '@babel/plugin-syntax-dynamic-import',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-transform-runtime',
-            'loadable-components/babel'
+            '@loadable/babel-plugin'
           ]
         }
       },
@@ -78,18 +79,19 @@ module.exports = {
     new webpack.DefinePlugin({
       __isBrowser__: 'true'
     }),
+    new LoadablePlugin(),
     new CleanWebpackPlugin(),
-    new HtmlPlugin({
-      minify: { collapseWhitespace: true },
-      filename: 'main.html',
-      template: resolve(__dirname, 'template', 'template.ejs'),
-      chunksSortMode: (chunk1, chunk2) => {
-        const order = ['react-build', 'common', 'main']
-        const left = order.indexOf(chunk1.names[0])
-        const right = order.indexOf(chunk2.names[0])
-        return left - right
-      }
-    }),
+    // new HtmlPlugin({
+    //   minify: { collapseWhitespace: true },
+    //   filename: 'main.html',
+    //   template: resolve(__dirname, 'template', 'template.ejs'),
+    //   chunksSortMode: (chunk1, chunk2) => {
+    //     const order = ['react-build', 'common', 'main']
+    //     const left = order.indexOf(chunk1.names[0])
+    //     const right = order.indexOf(chunk2.names[0])
+    //     return left - right
+    //   }
+    // }),
     new MiniCssExtractPlugin({
       filename: 'static/[name]-[chunkhash].css'
     }),

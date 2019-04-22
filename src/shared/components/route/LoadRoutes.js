@@ -1,21 +1,20 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import loadable from '@loadable/component'
 
-import PrivateRoute from './PrivateRoute'
-import routes from 'shared/routes'
+import PrivateRoute from 'components/route/PrivateRoute'
+
+const Home = loadable(() => import('components/Home'))
+const Login = loadable(() => import('components/Login'))
+const Teste = loadable(() => import('components/Teste'))
 
 const LoadRoutes = () => {
-  function isPrivate (route, index) {
-    if (route.hasOwnProperty('private')) {
-      return <PrivateRoute key={index} {...route} />
-    }
-    return <Route key={index} {...route} />
-  }
-
   return (
-    <>
-      {routes.map((route, index) => isPrivate(route, index))}
-    </>
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/login' component={Login} />
+      <PrivateRoute exact path='/teste' component={Teste} />
+    </Switch>
   )
 }
 

@@ -1,8 +1,8 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
-const HtmlPlugin = require('html-webpack-plugin')
+// const HtmlPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-// const { ReactLoadablePlugin } = require('react-loadable/webpack')
+const LoadablePlugin = require('@loadable/webpack-plugin')
 
 const paths = {
   src: resolve(__dirname, '..', 'src'),
@@ -11,7 +11,7 @@ const paths = {
   shared: resolve(__dirname, '..', 'src', 'shared')
 }
 
-const indexName = process.env.CLIENT ? 'index.html' : 'main.html'
+// const indexName = process.env.CLIENT ? 'index.html' : 'main.html'
 
 const includesPath = [paths.client, paths.shared]
 
@@ -49,7 +49,7 @@ module.exports = {
             '@babel/plugin-syntax-dynamic-import',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-transform-runtime',
-            'loadable-components/babel'
+            '@loadable/babel-plugin'
           ]
         }
       },
@@ -76,17 +76,18 @@ module.exports = {
     new webpack.DefinePlugin({
       __isBrowser__: 'true'
     }),
-    new CleanWebpackPlugin(),
-    new HtmlPlugin({
-      filename: indexName,
-      template: resolve(__dirname, 'template', 'template.ejs'),
-      chunksSortMode: (chunk1, chunk2) => {
-        const order = ['react-build', 'common', 'main']
-        const left = order.indexOf(chunk1.names[0])
-        const right = order.indexOf(chunk2.names[0])
-        return left - right
-      }
-    })
+    new LoadablePlugin(),
+    new CleanWebpackPlugin()
+    // new HtmlPlugin({
+    //   filename: indexName,
+    //   template: resolve(__dirname, 'template', 'template.ejs'),
+    //   chunksSortMode: (chunk1, chunk2) => {
+    //     const order = ['react-build', 'common', 'main']
+    //     const left = order.indexOf(chunk1.names[0])
+    //     const right = order.indexOf(chunk2.names[0])
+    //     return left - right
+    //   }
+    // })
   ],
   stats: {
     all: false,
