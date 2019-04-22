@@ -7,7 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const paths = {
   src: resolve(__dirname, '..', 'src'),
   dist: resolve(__dirname, '..', 'public'),
-  client: resolve(__dirname, '..', 'src', 'browser'),
+  client: resolve(__dirname, '..', 'src', 'client'),
   shared: resolve(__dirname, '..', 'src', 'shared')
 }
 

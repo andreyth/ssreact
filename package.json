@@ -5,14 +5,13 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack --mode development --config webpack.config.js --watch",
-    "roda": "nodemon build-server/server.js",
+    "exec": "nodemon build-server/server.js",
     "dev-client": "CLIENT=true webpack --mode development --config config/client.dev.js --watch",
     "build-dev-client": "webpack --mode development --config config/client.dev.js --watch",
     "build-dev-server": "webpack --mode development --config config/server.dev.js --watch",
     "build-prod-client": "cross-env NODE_ENV=production BABEL_ENV=production webpack --mode production --config config/client.prod.js",
     "build-prod-server": "cross-env NODE_ENV=production BABEL_ENV=production webpack --mode production --config config/server.config.js",
-    "analyze-client": "cross-env ANALYZER=true npm run build-prod-client",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "analyze-client": "cross-env ANALYZER=true npm run build-prod-client"
   },
   "keywords": [],
   "author": "",
