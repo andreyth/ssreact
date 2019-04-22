@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
-// const HtmlPlugin = require('html-webpack-plugin')
+const HtmlPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
 
@@ -11,7 +11,24 @@ const paths = {
   shared: resolve(__dirname, '..', 'src', 'shared')
 }
 
-// const indexName = process.env.CLIENT ? 'index.html' : 'main.html'
+const tempPlugin = () => {
+  if (process.env.PLAT === 'client') {
+    return [
+      new HtmlPlugin({
+        filename: 'index.html',
+        template: resolve(__dirname, 'template', 'template.ejs'),
+        chunksSortMode: (chunk1, chunk2) => {
+          const order = ['react-build', 'common', 'main']
+          const left = order.indexOf(chunk1.names[0])
+          const right = order.indexOf(chunk2.names[0])
+          return left - right
+        }
+      })
+    ]
+  }
+
+  return []
+}
 
 const includesPath = [paths.client, paths.shared]
 
@@ -76,18 +93,9 @@ module.exports = {
     new webpack.DefinePlugin({
       __isBrowser__: 'true'
     }),
+    ...tempPlugin(),
     new LoadablePlugin(),
     new CleanWebpackPlugin()
-    // new HtmlPlugin({
-    //   filename: indexName,
-    //   template: resolve(__dirname, 'template', 'template.ejs'),
-    //   chunksSortMode: (chunk1, chunk2) => {
-    //     const order = ['react-build', 'common', 'main']
-    //     const left = order.indexOf(chunk1.names[0])
-    //     const right = order.indexOf(chunk2.names[0])
-    //     return left - right
-    //   }
-    // })
   ],
   stats: {
     all: false,

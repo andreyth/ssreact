@@ -4,9 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack --mode development --config webpack.config.js --watch",
-    "exec": "nodemon build-server/server.js",
-    "dev-client": "CLIENT=true webpack --mode development --config config/client.dev.js --watch",
+    "start": "PLAT=server webpack --mode development --config webpack.config.js --watch",
+    "exec": "PLAT=server nodemon build-server/server.js",
+    "dev-client": "PLAT=client webpack --mode development --config config/client.dev.js --watch",
     "build-dev-client": "webpack --mode development --config config/client.dev.js --watch",
     "build-dev-server": "webpack --mode development --config config/server.dev.js --watch",
     "build-prod-client": "cross-env NODE_ENV=production BABEL_ENV=production webpack --mode production --config config/client.prod.js",
