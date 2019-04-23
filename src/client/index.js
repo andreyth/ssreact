@@ -7,16 +7,10 @@ import { Provider } from 'react-redux'
 import { clientStore } from 'shared/store'
 import LoadRoutes from 'components/route/LoadRoutes'
 
-let exec = ReactDOM.render
-
-if (process.env.NODE_ENV !== 'production') {
-  exec = ReactDOM.hydrate
-}
-
 let store = clientStore(window.INITIAL_STATE)
 
 loadableReady(() => {
-  exec(
+  ReactDOM.hydrate(
     <Provider store={store}>
       <BrowserRouter>
         <LoadRoutes />

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { ChunkExtractor } from '@loadable/server'
 import { StaticRouter } from 'react-router-dom'
 import serialize from 'serialize-javascript'
-// import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 import LoadRoutes from 'components/route/LoadRoutes'
 
@@ -27,11 +27,14 @@ const renderer = (req, store) => {
   const jsx = extractor.collectChunks(app)
 
   const markup = renderToString(jsx)
+  const helmet = Helmet.renderStatic()
 
   let html = `
     <!DOCTYPE html>
     <html>
       <head>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
         ${extractor.getLinkTags()}
         ${extractor.getStyleTags()}
       </head>

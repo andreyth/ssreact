@@ -21,19 +21,22 @@ app.use(express.static(resolve(__dirname, '..', 'public')))
 app.get('/favicon.ico', (req, res) => res.status(204))
 
 app.get('*', (req, res, next) => {
+  res.set('content-type', 'text/html')
   const activeRoute = routes.find(route => {
-    if (matchPath(req.url, route.path).isExact === true) {
+    let matchRoute = matchPath(req.url, route.path)
+    if (matchRoute && matchRoute.isExact === true) {
       return route
     }
   })
 
   const promise = activeRoute.loadData ? activeRoute.loadData(store) : Promise.resolve()
   if (promise instanceof Promise) {
-    promise.then(() => {}).catch(next)
+    promise.then(() => {
+      res.send(renderer(req, store, {}))
+    }).catch(next)
+  } else {
+    res.send(renderer(req, store, {}))
   }
-
-  res.set('content-type', 'text/html')
-  res.send(renderer(req, store, {}))
 })
 
 app.listen(3000, () => {

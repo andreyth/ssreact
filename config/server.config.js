@@ -3,7 +3,7 @@ const webpack = require('webpack')
 var nodeExternals = require('webpack-node-externals')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const LoadablePlugin = require('@loadable/webpack-plugin')
+// const LoadablePlugin = require('@loadable/webpack-plugin')
 
 const paths = {
   src: resolve(__dirname, '..', 'src'),
@@ -109,8 +109,6 @@ module.exports = {
       'src': paths.src,
       'shared': paths.shared,
       'components': resolve(paths.shared, 'components')
-      // 'react': 'preact-compat',
-      // 'react-dom': 'preact-compat'
     }
   },
   ...optimization(),

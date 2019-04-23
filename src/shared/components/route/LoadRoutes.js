@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import PrivateRoute from './PrivateRoute'
 import routes from 'shared/routes'
@@ -15,7 +15,9 @@ class LoadRoutes extends PureComponent {
 
     return (
       <>
-        {routes.map((route, index) => isPrivate(route, index))}
+        <Switch>
+          {routes.map((route, index) => isPrivate(route, index))}
+        </Switch>
       </>
     )
   }

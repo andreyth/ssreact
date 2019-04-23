@@ -118,9 +118,9 @@ module.exports = {
     alias: {
       'src': paths.src,
       'shared': paths.shared,
-      'components': resolve(paths.shared, 'components'),
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat'
+      'components': resolve(paths.shared, 'components')
+      // 'react': 'preact-compat',
+      // 'react-dom': 'preact-compat'
     }
   },
   optimization: {
