@@ -2,7 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import { resolve } from 'path'
 import compression from 'compression'
+import { matchPath } from 'react-router-dom'
 
+import routes from 'shared/routes'
+import store from 'shared/store'
 import renderer from './renderer'
 
 const app = express()
@@ -18,8 +21,19 @@ app.use(express.static(resolve(__dirname, '..', 'public')))
 app.get('/favicon.ico', (req, res) => res.status(204))
 
 app.get('*', (req, res, next) => {
+  const activeRoute = routes.find(route => {
+    if (matchPath(req.url, route.path).isExact === true) {
+      return route
+    }
+  })
+
+  const promise = activeRoute.loadData ? activeRoute.loadData(store) : Promise.resolve()
+  if (promise instanceof Promise) {
+    promise.then(() => {}).catch(next)
+  }
+
   res.set('content-type', 'text/html')
-  res.send(renderer(req))
+  res.send(renderer(req, store, {}))
 })
 
 app.listen(3000, () => {
