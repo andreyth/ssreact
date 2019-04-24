@@ -17,7 +17,7 @@ const stats = {
 const renderer = (req, store) => {
   const app = (
     <Provider store={store}>
-      <StaticRouter location={req.url}>
+      <StaticRouter location={req.url} context={{}}>
         <LoadRoutes />
       </StaticRouter>
     </Provider>

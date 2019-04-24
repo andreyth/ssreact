@@ -4,10 +4,10 @@ import { loadableReady } from '@loadable/component'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import { clientStore } from 'shared/store'
+import store from 'shared/store'
 import LoadRoutes from 'components/route/LoadRoutes'
 
-let store = clientStore(window.INITIAL_STATE)
+// let store = clientStore(window.INITIAL_STATE)
 
 loadableReady(() => {
   ReactDOM.hydrate(
