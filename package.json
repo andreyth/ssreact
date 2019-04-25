@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "PLAT=server webpack --mode development --config webpack.config.js --watch",
-    "exec": "PLAT=server nodemon build-server/server.js",
+    "exec-server": "PLAT=server nodemon build-server/server.js",
+    "exec-client": "lite-server --baseDir ./public",
     "full-exec": "npm run build-prod-client && npm run build-prod-server && NODE_ENV=production node build-server/server.js",
     "dev-client": "PLAT=client webpack --mode development --config config/client.dev.js --watch",
     "build-dev-client": "webpack --mode development --config config/client.dev.js --watch",
@@ -29,11 +30,13 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-dynamic-import-node-babel-7": "^2.0.7",
+    "babel-plugin-styled-components": "^1.10.0",
     "clean-webpack-plugin": "^2.0.1",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "file-loader": "^3.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "lite-server": "^2.4.0",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.11",
@@ -69,7 +72,8 @@
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "serialize-javascript": "^1.7.0"
+    "serialize-javascript": "^1.7.0",
+    "styled-components": "^4.2.0"
   },
   "standard": {
     "parser": "babel-eslint"

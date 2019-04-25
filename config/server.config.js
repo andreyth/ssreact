@@ -73,7 +73,8 @@ module.exports = {
             'dynamic-import-node-babel-7',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-transform-runtime',
-            '@loadable/babel-plugin'
+            '@loadable/babel-plugin',
+            'babel-plugin-styled-components'
           ]
         }
       },
@@ -99,7 +100,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'false'
+      __isBrowser__: 'false',
+      __platform__: JSON.stringify(process.env.PLAT)
     }),
     // new LoadablePlugin(),
     new CleanWebpackPlugin()

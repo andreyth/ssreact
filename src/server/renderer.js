@@ -6,6 +6,7 @@ import { ChunkExtractor } from '@loadable/server'
 import { StaticRouter } from 'react-router-dom'
 import serialize from 'serialize-javascript'
 import { Helmet } from 'react-helmet'
+import { ServerStyleSheet } from 'styled-components'
 
 import LoadRoutes from 'components/route/LoadRoutes'
 
@@ -14,7 +15,9 @@ const stats = {
   server: resolve(__dirname, '..', 'build-server', 'loadable-stats.json')
 }
 
-const renderer = (req, store) => {
+const renderer = (req, res, store) => {
+  const sheet = new ServerStyleSheet()
+
   const app = (
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
@@ -23,29 +26,38 @@ const renderer = (req, store) => {
     </Provider>
   )
 
-  const extractor = new ChunkExtractor({ statsFile: stats.client })
-  const jsx = extractor.collectChunks(app)
+  try {
+    const extractor = new ChunkExtractor({ statsFile: stats.client })
+    const jsx = extractor.collectChunks(app)
 
-  const markup = renderToString(jsx)
-  const helmet = Helmet.renderStatic()
+    const markup = renderToString(sheet.collectStyles(jsx))
+    const styleTags = sheet.getStyleTags()
+    const helmet = Helmet.renderStatic()
 
-  let html = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        ${helmet.title.toString()}
-        ${helmet.meta.toString()}
-        ${extractor.getLinkTags()}
-        ${extractor.getStyleTags()}
-      </head>
-      <body>
-        <div id="root">${markup}</div>
-        <script>window.INITIAL_STATE = ${serialize(store.getState())}</script>
-        ${extractor.getScriptTags()}
-      </body>
-    </html>
-  `
-  return html
+    let html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          ${helmet.title.toString()}
+          ${helmet.meta.toString()}
+          ${extractor.getLinkTags()}
+          ${extractor.getStyleTags()}
+          ${styleTags}
+        </head>
+        <body>
+          <div id="root">${markup}</div>
+          <script>window.INITIAL_STATE = ${serialize(store.getState())}</script>
+          ${extractor.getScriptTags()}
+        </body>
+      </html>
+    `
+    res.send(html)
+  } catch (error) {
+    console.error(error)
+    res.send('<h1>ERRO</h1>')
+  } finally {
+    sheet.seal()
+  }
 }
 
 export default renderer

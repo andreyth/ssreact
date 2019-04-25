@@ -46,10 +46,10 @@ app.get('*', (req, res, next) => {
   const promise = activeRoute.loadData ? activeRoute.loadData(store) : Promise.resolve()
   if (promise instanceof Promise) {
     promise.then(() => {
-      res.send(renderer(req, store, {}))
+      renderer(req, res, store, {})
     }).catch(next)
   } else {
-    res.send(renderer(req, store, {}))
+    renderer(req, res, store, {})
   }
 })
 

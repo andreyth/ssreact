@@ -52,7 +52,8 @@ module.exports = {
             '@babel/plugin-syntax-dynamic-import',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-transform-runtime',
-            '@loadable/babel-plugin'
+            '@loadable/babel-plugin',
+            'babel-plugin-styled-components'
           ]
         }
       },
@@ -77,7 +78,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: 'true'
+      __isBrowser__: 'true',
+      __platform__: JSON.stringify(process.env.PLAT)
     }),
     new LoadablePlugin(),
     new CleanWebpackPlugin(),
@@ -131,14 +133,14 @@ module.exports = {
           name: 'reactBuild',
           chunks: 'all',
           test ({ resource }, chunks) {
-            return /node_modules\/(react|react-dom|preact)/.test(resource)
+            return /node_modules\/(react|react-dom)/.test(resource)
           }
         },
         commons: {
           name: 'common',
           chunks: 'all',
           test ({ resource }, chunks) {
-            return /node_modules\/(?!(react|react-dom|preact))/.test(resource)
+            return /node_modules\/(?!(react|react-dom))/.test(resource)
           }
         }
       }

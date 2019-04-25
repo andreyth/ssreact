@@ -12,11 +12,13 @@ export const login = () => (dispatch) => {
   return axios.get('/api/login').then(res => {
     const token = res.data.token
     cookieWork.setCookie('token', token, 30)
+    window.localStorage.setItem('token', token)
     dispatch(setCurrentUser(res.data))
   })
 }
 
 export const logout = () => (dispatch) => {
   cookieWork.deleteCookie('token')
+  window.localStorage.removeItem('token')
   dispatch(setCurrentUser({}))
 }
