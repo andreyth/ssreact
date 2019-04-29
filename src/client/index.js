@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 
 import store from 'shared/store'
 import LoadRoutes from 'components/route/LoadRoutes'
-import { setCurrentUser } from 'shared/actions/authActions'
+import { setCurrentUser } from 'shared/ducks/auth'
 
 // let store = clientStore(window.INITIAL_STATE)
 

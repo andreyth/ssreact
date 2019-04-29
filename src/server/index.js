@@ -8,7 +8,7 @@ import { matchPath } from 'react-router-dom'
 import routes from 'shared/routes'
 import store from 'shared/store'
 import renderer from './renderer'
-import { setCurrentUser } from 'shared/actions/authActions'
+import { setCurrentUser } from 'shared/ducks/auth'
 
 const app = express()
 app.use(cookieParser())

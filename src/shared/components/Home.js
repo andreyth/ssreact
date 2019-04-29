@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import loadable from '@loadable/component'
 import { connect } from 'react-redux'
-import { login, logout } from 'shared/actions/authActions'
+import { login, logout } from 'shared/ducks/auth'
 import { Redirect } from 'react-router-dom'
 
 // import Nada from 'components/Nada'

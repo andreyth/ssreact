@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
 
-import loadDatas from 'shared/loadDatas'
+import { loadUsers } from 'shared/ducks/teste'
 
 const Home = loadable(() => import('components/Home'))
 const Login = loadable(() => import('components/Login'))
@@ -9,7 +9,7 @@ const Teste = loadable(() => import('components/Teste'))
 
 const routes = [
   { path: '/', exact: true, component: Home },
-  { path: '/teste', exact: true, component: Teste, private: true, loadData: loadDatas.loadUsers },
+  { path: '/teste', exact: true, component: Teste, private: true, loadData: (store) => store.dispatch(loadUsers()) },
   { path: '/login', exact: true, component: Login }
   // { path: '/*', exact: true, component: NotFound }
 ]

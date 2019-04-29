@@ -1,9 +1,28 @@
 import axios from 'axios'
 import cookieWork from 'shared/utils/cookieWork'
 
+// Types
+const SET_CURRENT_USER = 'teste/SET_CURRENT_USER'
+
+// Reducers
+const initialState = {
+  isAuthenticated: false,
+  user: {}
+}
+
+export default function authReducer (state = initialState, action) {
+  switch (action.type) {
+    case SET_CURRENT_USER:
+      return { isAuthenticated: !!Object.keys(action.payload).length, user: action.payload }
+    default:
+      return state
+  }
+}
+
+// Actions
 export const setCurrentUser = (user) => {
   return {
-    type: 'SET_CURRENT_USER',
+    type: SET_CURRENT_USER,
     payload: user
   }
 }
