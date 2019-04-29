@@ -8,7 +8,7 @@ import serialize from 'serialize-javascript'
 import { Helmet } from 'react-helmet'
 import { ServerStyleSheet } from 'styled-components'
 
-import LoadRoutes from 'components/route/LoadRoutes'
+import App from 'shared/App'
 
 const stats = {
   client: resolve(__dirname, '..', 'public', 'loadable-stats.json'),
@@ -21,7 +21,7 @@ const renderer = (req, res, store) => {
   const app = (
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        <LoadRoutes />
+        <App />
       </StaticRouter>
     </Provider>
   )

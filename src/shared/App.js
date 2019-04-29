@@ -1,17 +1,13 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import loadable from '@loadable/component'
 
-const Home = loadable(() => import('components/Home'))
-const Login = loadable(() => import('components/Login'))
+import GlobalStyles from 'components/ui/GlobalStyles'
+import LoadRoutes from 'components/route/LoadRoutes'
 
 const App = () => (
-  <div>
-
-    <Route exact path='/' component={Home} />
-    <Route path='/login' component={Login} />
-
-  </div>
+  <>
+    <GlobalStyles />
+    <LoadRoutes />
+  </>
 )
 
 export default App

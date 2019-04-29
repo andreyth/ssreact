@@ -7,12 +7,12 @@ export const Types = {
 }
 
 // Reducers
-const initialState = {
+const InitialState = {
   isAuthenticated: false,
   user: {}
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = InitialState, action) => {
   switch (action.type) {
     case Types.SET_CURRENT_USER:
       return { isAuthenticated: !!Object.keys(action.payload).length, user: action.payload }

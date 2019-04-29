@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import store from 'shared/store'
-import LoadRoutes from 'components/route/LoadRoutes'
+import App from 'shared/App'
 import { setCurrentUser } from 'shared/ducks/auth'
 import cookieWork from 'shared/utils/cookieWork'
 
@@ -14,7 +14,7 @@ import cookieWork from 'shared/utils/cookieWork'
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <LoadRoutes />
+      <App />
     </BrowserRouter>
   </Provider>
 )
