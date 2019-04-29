@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from 'shared/store'
 import LoadRoutes from 'components/route/LoadRoutes'
 import { setCurrentUser } from 'shared/ducks/auth'
+import cookieWork from 'shared/utils/cookieWork'
 
 // let store = clientStore(window.INITIAL_STATE)
 
@@ -19,8 +20,8 @@ const app = (
 )
 
 if (__platform__ === 'client') { /* eslint-disable-line */
-  if (window.localStorage.getItem('token')) {
-    const tokenValue = window.localStorage.getItem('token')
+  if (cookieWork.getCookie('token')) {
+    const tokenValue = cookieWork.getCookie('token')
     store.dispatch(setCurrentUser({ token: tokenValue }))
   }
   ReactDOM.render(

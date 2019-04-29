@@ -1,10 +1,12 @@
 // Types
-const USER = 'teste/USER'
+const Types = {
+  USER: 'teste/USER'
+}
 
 // Reducers
-export default function testeReducer (state = 0, action) {
+export const testeReducer = (state = 0, action) => {
   switch (action.type) {
-    case USER:
+    case Types.USER:
       return action.payload
     default:
       return state
@@ -12,9 +14,9 @@ export default function testeReducer (state = 0, action) {
 }
 
 // Actions
-export function loadUsers () {
+export const loadUsers = () => {
   return {
-    type: USER,
+    type: Types.USER,
     payload: { user: 'JO' }
   }
 }

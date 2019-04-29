@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import teste from 'shared/ducks/teste'
-import auth from 'shared/ducks/auth'
+import { testeReducer } from 'shared/ducks/teste'
+import { authReducer } from 'shared/ducks/auth'
 
 export default combineReducers({
-  teste,
-  auth
+  teste: testeReducer,
+  auth: authReducer
 })
