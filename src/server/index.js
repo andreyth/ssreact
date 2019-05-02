@@ -8,7 +8,7 @@ import { matchPath } from 'react-router-dom'
 import routes from 'shared/routes'
 import store from 'shared/store'
 import renderer from './renderer'
-import { setCurrentUser } from 'shared/ducks/auth'
+import { authActions } from 'shared/ducks/auth'
 
 const app = express()
 app.use(cookieParser())
@@ -30,9 +30,9 @@ app.get('/api/login', (req, res) => {
 app.get('*', (req, res, next) => {
   if (req.cookies.token) {
     const tokenValue = req.cookies.token
-    store.dispatch(setCurrentUser({ token: tokenValue }))
+    store.dispatch(authActions.setCurrentUser({ token: tokenValue }))
   } else {
-    store.dispatch(setCurrentUser({}))
+    store.dispatch(authActions.setCurrentUser({}))
   }
 
   res.set('content-type', 'text/html')

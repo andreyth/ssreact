@@ -7,12 +7,12 @@ export const Types = {
 }
 
 // Reducers
-const InitialState = {
+const _initialState = {
   isAuthenticated: false,
   user: {}
 }
 
-export const authReducer = (state = InitialState, action) => {
+export const authReducer = (state = _initialState, action) => {
   switch (action.type) {
     case Types.SET_CURRENT_USER:
       return { isAuthenticated: !!Object.keys(action.payload).length, user: action.payload }
@@ -22,24 +22,30 @@ export const authReducer = (state = InitialState, action) => {
 }
 
 // Actions
-export const setCurrentUser = (user) => {
-  return {
-    type: Types.SET_CURRENT_USER,
-    payload: user
+export const authActions = (() => {
+  const setCurrentUser = (user) => {
+    return {
+      type: Types.SET_CURRENT_USER,
+      payload: user
+    }
   }
-}
 
-export const login = () => (dispatch) => {
-  return axios.get('/api/login').then(res => {
-    const token = res.data.token
-    cookieWork.setCookie('token', token, 30)
-    // window.localStorage.setItem('token', token)
-    dispatch(setCurrentUser(res.data))
-  })
-}
+  const login = () => (dispatch) => {
+    return axios.get('/api/login').then(res => {
+      const token = res.data.token
+      cookieWork.setCookie('token', token, 30)
+      // window.localStorage.setItem('token', token)
+      dispatch(setCurrentUser(res.data))
+    })
+  }
 
-export const logout = () => (dispatch) => {
-  cookieWork.deleteCookie('token')
-  // window.localStorage.removeItem('token')
-  dispatch(setCurrentUser({}))
-}
+  const logout = () => (dispatch) => {
+    cookieWork.deleteCookie('token')
+    // window.localStorage.removeItem('token')
+    dispatch(setCurrentUser({}))
+  }
+
+  return {
+    setCurrentUser, login, logout
+  }
+})()

@@ -1,5 +1,5 @@
 // Types
-const Types = {
+export const Types = {
   USER: 'teste/USER'
 }
 
@@ -14,9 +14,15 @@ export const testeReducer = (state = 0, action) => {
 }
 
 // Actions
-export const loadUsers = () => {
-  return {
-    type: Types.USER,
-    payload: { user: 'JO' }
+export const testeActions = (() => {
+  const loadUsers = () => {
+    return {
+      type: Types.USER,
+      payload: { user: 'JO' }
+    }
   }
-}
+
+  return {
+    loadUsers
+  }
+})()

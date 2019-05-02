@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import loadable from '@loadable/component'
 import { connect } from 'react-redux'
-import { login, logout } from 'shared/ducks/auth'
+import { authActions } from 'shared/ducks/auth'
 import { Redirect } from 'react-router-dom'
 
 // import Nada from 'components/Nada'
@@ -16,7 +16,9 @@ class Home extends PureComponent {
   }
 
   logar = () => {
-    this.props.login().then(() => this.setState({ redirect: true })).catch(err => console.log(err))
+    this.props.login().then(() => {
+      this.props.history.push('/teste')
+    }).catch(err => console.log(err))
   }
 
   sair = () => {
@@ -46,4 +48,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { login, logout })(Home)
+export default connect(mapStateToProps, { ...authActions })(Home)
